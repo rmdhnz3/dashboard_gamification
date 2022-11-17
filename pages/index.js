@@ -1,15 +1,15 @@
 import Head from 'next/head';
-import Link from 'next/link';
-import { useState } from 'react';
 import ProfileLeft from '../components/ProfileLeft';
 import ProfileRight from '../components/ProfileRight';
+import { ChakraProvider } from '@chakra-ui/react'
 
 
 export default function Index() {
   return (
+    
     <div>
       <Head>
-        <title>Gamification</title>
+        <title>Gamification Dashboard</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className='container mx-auto px-10 mt-2 mb-8 py-4'>

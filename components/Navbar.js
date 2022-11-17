@@ -18,11 +18,14 @@ function MobileNav({open, setOpen}) {
                 <a className="text-xl font-normal my-2 mx-1 hover:bg-gray-300 px-2 py-2 rounded-lg transition duration-500" href="/a" onClick={() => setTimeout(() => {setOpen(!open)}, 100)}>
                     Home
                 </a>
-                <a className="text-xl font-normal my-2 mx-1 hover:bg-gray-300 px-2 py-2 rounded-lg transition duration-500" href="/about" onClick={() => setTimeout(() => {setOpen(!open)}, 100)}>
-                    About
+                <a className="text-xl font-normal my-2 mx-1 hover:bg-gray-300 px-2 py-2 rounded-lg transition duration-500" href="/user" onClick={() => setTimeout(() => {setOpen(!open)}, 100)}>
+                    User
                 </a>
-                <a className="text-xl font-normal my-2 mx-1 hover:bg-gray-300 px-2 py-2 rounded-lg transition duration-500" href="/contact" onClick={() => setTimeout(() => {setOpen(!open)}, 100)}>
-                    Contact
+                <a className="text-xl font-normal my-2 mx-1 hover:bg-gray-300 px-2 py-2 rounded-lg transition duration-500" href="/ustrans" onClick={() => setTimeout(() => {setOpen(!open)}, 100)}>
+                   User Transaction
+                </a>
+                 <a className="text-xl font-normal my-2 mx-1 hover:bg-gray-300 px-2 py-2 rounded-lg transition duration-500" href="/Badges" onClick={() => setTimeout(() => {setOpen(!open)}, 100)}> 
+                    Badges
                 </a>
             </div>  
         </div>
@@ -54,11 +57,14 @@ export default function Navbar() {
                     <NavLink to="/">
                         Home
                     </NavLink>
-                    <NavLink to="/contact">
-                        Contact
+                    <NavLink to="/user">
+                        User
                     </NavLink>
-                    <NavLink to="/about">
-                        About
+                    <NavLink to="/ustrans">
+                        User Transaction
+                    </NavLink>
+                    <NavLink to="/badges">
+                        Badges
                     </NavLink>
                 </div>
             </div>
