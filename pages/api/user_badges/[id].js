@@ -2,13 +2,12 @@ const conn = require('../../../config/db')
 
 export default function handler(req, res) {
    const reqMethod = req.method
-   console.log(req.query.id)
    switch (reqMethod) {
 
     case 'PUT':
         const data = {...req.body};
-        const querya ='SELECT * FROM level WHERE id = ?'
-        const queryb= 'UPDATE level SET ? WHERE id = ?'
+        const querya ='SELECT * FROM user_badges WHERE id = ?'
+        const queryb= 'UPDATE user_badges SET ? WHERE id = ?'
         conn.query(querya,req.query.id,(err,rows)=>{
             if(err){
                 return res.status(500).json({
@@ -34,8 +33,8 @@ export default function handler(req, res) {
         break;
         
         case 'DELETE':
-            const queryx ='SELECT * FROM level WHERE id = ?'
-            const queryy= 'UPDATE level SET status=0 WHERE id = ?'
+            const queryx ='SELECT * FROM user_badges WHERE id = ?'
+            const queryy= 'DELETE FROM user_badges WHERE id = ?'
             conn.query(queryx,req.query.id,(err,rows)=>{
                 if(err){
                     return res.status(500).json({
@@ -58,10 +57,21 @@ export default function handler(req, res) {
                     return res.status(404).json({message:'data not found',succes:false})
                 }
             })
+            break;
 
+           
    
 
-    default:    
+    default: 
+    const querySql = 'SELECT * FROM user_badges WHERE user_id = ?'
+    conn.query(querySql,req.query.id,(err,rows,field)=>{
+     if(err){
+         return res.status(500).json({
+             message:'Error',error:err
+         });
+     }
+    return res.status(200).json({succes:true,data:rows,})
+    })
         break;
    }
    

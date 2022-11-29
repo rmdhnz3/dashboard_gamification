@@ -61,6 +61,17 @@ export default function handler(req, res) {
    
 
     default:    
+    const querySql = 'SELECT * FROM user WHERE id = ?'
+    conn.query(querySql,req.query.id,(err,rows,field)=>{
+     if(err){
+         return res.status(500).json({
+             message:'Error',error:err
+         });
+     }
+    var data = rows;
+    return res.status(200).json(data)
+    })
+
         break;
    }
    

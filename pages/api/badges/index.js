@@ -1,5 +1,4 @@
 const conn = require('../../.././config/db')
-
 export default function handler(req, res) {
    const reqMethod = req.method
    switch (reqMethod) {

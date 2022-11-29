@@ -1,5 +1,4 @@
 const conn = require('../../.././config/db')
-var sortBy = require('sort-by')
 export default function handler(req, res) {
    const reqMethod = req.method
    switch (reqMethod) {
@@ -25,7 +24,7 @@ export default function handler(req, res) {
     default:    
     const querySql = 'SELECT * FROM user WHERE status=1'
     const {s,x} = req.query
-    const keys = ["id","name","badge_point_jp","badge_point_ks","badge_point_mr","badge_point_ks","badge_point_bc","catatan_dibagikan","pertanyaan_dijawab","buat_rumus","materi_dibaca","soal_dikerjakan","exp_level"] ;
+    const keys = ["id","username","exp_point"] ;
     const search = (a)=>{
         return a.filter((item)=>
         keys.some((key)=>item[key].toString().toLowerCase().includes(s))

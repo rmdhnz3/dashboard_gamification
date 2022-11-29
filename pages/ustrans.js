@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { FormControl,InputLabel,Input,FormHelperText,TextField ,Grid, Dialog,DialogActions,DialogContent,DialogTitle,DialogContentText, RadioGroup, FormControlLabel, FormLabel, Radio, Select, MenuItem} from "@mui/material";
 import moment from "moment";
+import { EXPORT_DETAIL } from "next/dist/shared/lib/constants";
 
 const style = {
   position: 'relative',
@@ -26,6 +27,11 @@ export default function User() {
  const {
         ustrans,
         setUstrans,
+        open,
+        setOpen,
+        detail,
+        ustransdetail,
+        setSearch,
         deleteUstrans,
         updateUstrans
   } = useAppContext()      
@@ -37,8 +43,8 @@ export default function User() {
       const ustransUpdate = []
 
       const handleSearch2 = (event) =>{
-        setUstrans({
-         search2:(event.target.value.toLowerCase())
+        setSearch({
+         ustrans:(event.target.value.toLowerCase())
         })        
       }
       const handleChange = (e) =>{
@@ -52,19 +58,35 @@ export default function User() {
       const [scroll, setScroll] = React.useState('paper');
       const descriptionElementRef = React.useRef(null);
       React.useEffect(() => {
-        if (ustrans.openUstrans1) {
+        if (open.openUstrans1) {
           const { current: descriptionElement } = descriptionElementRef;
           if (descriptionElement !== null) {
             descriptionElement.focus();
           }
         }
-      }, [ustrans.openUstrans1 ]);
+      }, [open.openUstrans1]);
 
 
-      const { handleOpenUserDetail, handleOpenUserUpdate, handleOpenUserDelete, handleCloseUserDetail, handleCloseUserUpdate, handleCloseUserDelete } = newFunction();
+   const  handleOpenUstransDetail = () => {setOpen({
+      openUstrans1:true
+     })}
+     const  handleCloseUstransDetail = () => {setOpen({
+      openUstrans1:false
+     })}
+     const  handleOpenUstransUpdate = () => {setOpen({
+      openUstrans2:true
+     })}
+     const   handleCloseUstransUpdate = () => {setOpen({
+      openUstrans2:false
+     })}
+     const   handleOpenUstransDelete = () => {setOpen({
+      openUstrans3:true
+     })}
+     const   handleCloseUstransDelete = () => {setOpen({
+      openUstrans3:false
+     })}
       
-      console.log(ustrans.ustransData)
-          if(ustrans.errorUstrans) return <div>failed to load</div>
+          if(ustrans.error) return <div>failed to load</div>
           if(!ustrans.ustransData) return <div>Loading</div>
     return (
         <div className='container mx-auto px-10 mt-8 mb-8 py-4'>
@@ -130,13 +152,13 @@ export default function User() {
                  <td>
                   <tr>
                     <td>
-                    <button type="button" className="inline-block px-4 py-2 bg-blue-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out" onClick={() => {handleOpenUserDetail(),userdetail(item)}}>Detail</button>
+                    <button type="button" className="inline-block px-4 py-2 bg-blue-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out" onClick={() => {handleOpenUstransDetail(),ustransdetail(item)}}>Detail</button>
 
                     </td>
                     <td> </td>
-                   <td> <button type="button" className="inline-block px-4 py-2 bg-yellow-400 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700 active:shadow-lg transition duration-150 ease-in-out" onClick={() => {handleOpenUserUpdate(),userdetail(item),setId(item.id)}}>Update</button></td>
+                   <td> <button type="button" className="inline-block px-4 py-2 bg-yellow-400 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700 active:shadow-lg transition duration-150 ease-in-out" onClick={() => {handleOpenUstransUpdate(),ustransdetail(item),setId(item.id)}}>Update</button></td>
                    <td>
-                   <button type="button" className="inline-block px-4 py-2 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out" onClick={() => {handleOpenUserDelete(),setId(item.id)}}>Delete</button>
+                   <button type="button" className="inline-block px-4 py-2 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out" onClick={() => {handleOpenUstransDelete(),setId(item.id)}}>Delete</button>
                    
                    </td>
                   </tr>
@@ -155,7 +177,62 @@ export default function User() {
       
             </div>
             <div>
+{/*Detail  */}
+<Dialog
+        open={open.openUstrans1}
+        onClose={handleCloseUstransDetail}
+        scroll={scroll}
+        aria-labelledby="scroll-dialog-title"
+        aria-describedby="scroll-dialog-description"
+        style={{width:'100%',position:'absolute',overflow:'scroll',overflowX:'hidden'}}
+      >
+        <DialogTitle>
+        <Typography  id="modal-modal-title" variant="h4" component="h4" >
+            Detail For User <strong>{detail.ustrans.name}</strong>
+          </Typography>
+        </DialogTitle>
+          <DialogContent style={{width:560}} dividers={scroll === 'paper'}>
+            <DialogContentText  
+             id="scroll-dialog-description"
+            ref={descriptionElementRef}>
+        
+         <Typography  id="modal-modal-content" variant="h6" component="h2" style={{paddingBottom:"20px"}}> 
+        <tr>
+            <tr>ID : </tr>
+           <td>{detail.ustrans.id}</td>
+        </tr>
 
+        <tr>
+            <td>User ID :</td>
+            <td>{detail.ustrans.user_id}</td>
+          </tr>  
+
+        <tr>
+            <td>Point Change :</td>
+            <td>{detail.ustrans.point_change}</td>
+          </tr>
+ 
+           <tr>
+            <td>Status :</td>
+            <td> 
+            {detail.ustrans.status==1 ? <td><span className="text-md inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-green-500 text-white rounded">Masuk</span></td> :<td><span className="text-md inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-red-500 text-white rounded">Keluar</span></td>}
+           </td>
+           </tr>
+
+           <tr>
+            <td>Created At :</td>
+            <td>{moment(detail.ustrans.created_at,'YYYY-MM-DDTHH:mm:ssZ').format()} </td>
+           </tr>
+
+           <tr>
+            <td>Updated At :</td>
+            <td>{moment(detail.ustrans.updated_at,'YYYY-MM-DDTHH:mm:ssZ').format()} </td>
+           </tr>
+       
+          </Typography>
+           </DialogContentText>
+          </DialogContent>
+      </Dialog>
 
      
 
@@ -164,16 +241,4 @@ export default function User() {
         
         
     )
-
-  function newFunction() {
-    const handleOpenUserDetail = () => setOpenUser1(true);
-    const handleCloseUserDetail = () => setOpenUser1(false);
-
-    const handleOpenUserUpdate = () => setOpenUser2(true);
-    const handleCloseUserUpdate = () => setOpenUser2(false);
-
-    const handleOpenUserDelete = () => setOpenUser3(true);
-    const handleCloseUserDelete = () => setOpenUser3(false);
-    return { handleOpenUserDetail, handleOpenUserUpdate, handleOpenUserDelete, handleCloseUserDetail, handleCloseUserUpdate, handleCloseUserDelete };
-  }
     }

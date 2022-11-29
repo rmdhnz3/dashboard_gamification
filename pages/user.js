@@ -9,52 +9,30 @@ import Modal from '@mui/material/Modal';
 import { FormControl,InputLabel,Input,FormHelperText,TextField ,Grid, Dialog,DialogActions,DialogContent,DialogTitle,DialogContentText, RadioGroup, FormControlLabel, FormLabel, Radio, Select, MenuItem} from "@mui/material";
 import moment from "moment";
 
-const style = {
-  position: 'relative',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 500,
-  bgcolor: 'background.paper',
-  boxShadow: 10,
-  p: 4,
-  overflow:'scroll',
-    display:'block'
-};
 export default function User() {
   
  const {user,
-        openUser1, 
-        setOpenUser1,
-        openUser2,
-        setOpenUser2,
-        openUser3,
-        setOpenUser3,
-        dataUser,
-        errorUser,
+        open, 
+        setOpen,
+        detail,
         setSearch,
-      userDetail,
-    userdetail,
+        userdetail,
         deleteUser,
         updateUser
   } = useAppContext()      
       const [id,setId] = useState('')
       const [state,setState] = React.useState({
-        name:"",
-        badge_point_bc:"",
-        badge_point_bm:"",
-        badge_point_jp:"",
-        badge_point_ks:"",
-        badge_point_mr:"",
-        catatan_dibagikan:0,
-        pertanyaan_dijawab:0,
-        rumus_dibuat:0,
-        materi_dibaca:0,
-        soal_dikerjakan:0,
-        exp_level:"",
+        username:"",
+        user_point:'',
+        bp_bc:'',
+        bp_jp:'',
+        bp_br:'',
+        bp_bm:'',
+        bp_ks:'',
+        exp_point:"",
         status:1
       })
-      const userUpdate = [state.name,state.badge_point_bc,state.badge_point_bm,state.badge_point_jp,state.badge_point_ks,state.badge_point_mr,state.catatan_dibagikan,state.materi_dibaca,state.pertanyaan_dijawab,state.rumus_dibuat,state.soal_dikerjakan,state.status,state.exp_level]
+      const userUpdate = [state.username,state.bp_bc,state.bp_jp,state.bp_br,state.bp_bm,state.bp_ks,state.exp_point,state.status]
       const handleSearch = (e) =>{
         setSearch(e.target.value.toLowerCase())        
       }
@@ -69,25 +47,37 @@ export default function User() {
       const [scroll, setScroll] = React.useState('paper');
       const descriptionElementRef = React.useRef(null);
       React.useEffect(() => {
-        if (openUser1) {
+        if (open.openUser1) {
           const { current: descriptionElement } = descriptionElementRef;
           if (descriptionElement !== null) {
             descriptionElement.focus();
           }
         }
-      }, [openUser1 ]);
+      }, [open.openUser1 ]);
 
 
-      const handleOpenUserDetail = () => setOpenUser1(true);
-      const handleCloseUserDetail = () => setOpenUser1(false);
+      const handleOpenUserDetail = () => setOpen({
+        openUser1:true
+      });
 
-      const handleOpenUserUpdate = () => setOpenUser2(true);
-      const handleCloseUserUpdate = () => setOpenUser2(false);
+        const handleCloseUserDetail = () => setOpen({
+          openUser1:false
+        });
 
-      const handleOpenUserDelete = () => setOpenUser3(true);
-      const handleCloseUserDelete= () => setOpenUser3(false);
-      
-          if(errorUser) return <div>failed to load</div>
+      const handleOpenUserUpdate = () => setOpen({
+        openUser2:true
+      });
+      const handleCloseUserUpdate = () => setOpen({
+        openUser2:false
+      });
+
+      const handleOpenUserDelete = () => setOpen({
+        openUser3:true
+      });
+      const handleCloseUserDelete= () => setOpen({
+        openUser3:false
+      });
+          if(user.error) return <div>failed to load</div>
           if(!user.dataUser) return <div>Loading</div>
     return (
         <div className='container mx-auto px-10 mt-8 mb-8 py-4'>
@@ -152,7 +142,7 @@ export default function User() {
             <tbody key={item.id}>
                 <tr  className="bg-white border-b font-medium dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
                   <th className="py-4 px-4 text-gray-900 whitespace-nowrap dark:text-white">{item.id}</th>
-                  <td className="py-4 px-2">{item.name}</td>
+                  <td className="py-4 px-2">{item.username}</td>
                   {item.status==1 ?<td><span className="text-md inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-green-500 text-white rounded">Active</span></td> :<td><span className="text-md inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-red-500 text-white rounded">Inactive</span></td> }
                  <td>
                   <tr>
@@ -183,9 +173,9 @@ export default function User() {
             </div>
             <div>
 
-{/*Detail  */}
+{/* Detail  */}
       <Dialog
-        open={openUser1}
+        open={open.openUser1}
         onClose={handleCloseUserDetail}
         scroll={scroll}
         aria-labelledby="scroll-dialog-title"
@@ -194,7 +184,7 @@ export default function User() {
       >
         <DialogTitle>
         <Typography  id="modal-modal-title" variant="h4" component="h4" >
-            Detail For User <strong>{userDetail.name}</strong>
+            Detail For User <strong>{detail.user.username}</strong>
           </Typography>
         </DialogTitle>
           <DialogContent style={{width:560}} dividers={scroll === 'paper'}>
@@ -205,89 +195,71 @@ export default function User() {
          <Typography  id="modal-modal-content" variant="h6" component="h2" style={{paddingBottom:"20px"}}> 
         <tr>
             <tr>ID : </tr>
-           <td>{userDetail.id}</td>
+           <td>{detail.user.id}</td>
         </tr>
 
         <tr>
             <td>Nama :</td>
-            <td>{userDetail.name}</td>
+            <td>{detail.user.username}</td>
           </tr>  
 
-        <tr>
-            <td>BP Kerjakan Soal :</td>
-            <td>{userDetail.badge_point_ks}</td>
+          <tr>
+            <td>User Point :</td>
+            <td>{detail.user.user_point}</td>
           </tr>
 
           <tr>
             <td>BP Berbagi Catatan :</td>
-            <td>{userDetail.badge_point_bc}</td>
-          </tr>
+            <td>{detail.user.bp_bc}</td>
+           </tr>
 
-          <tr>
-            <td>BP Membuat Rumus :</td>
-            <td>{userDetail.badge_point_mr}</td>
-          </tr>
-
-          <tr>
-            <td>BP Berbagi Materi :</td>
-            <td>{userDetail.badge_point_mr}</td>
-          </tr>
-
-          <tr>
+           <tr>
             <td>BP Jawab Pertanyaan :</td>
-            <td>{userDetail.badge_point_mr}</td>
-          </tr>
-
-          <tr>
-            <td>Catatan yang Dibagikan :</td>
-            <td>{userDetail.catatan_dibagikan}</td>
+            <td>{detail.user.bp_jp}</td>
            </tr>
 
            <tr>
-            <td>Pertanyaan yang dijawab :</td>
-            <td>{userDetail.pertanyaan_dijawab}</td>
-           </tr>
-
-           <tr>
-            <td> Rumus yang dibuat :</td>
-            <td> {userDetail.buat_rumus}</td>
+            <td>BP Buat Rumus :</td>
+            <td> {detail.user.bp_br}</td>
            </tr>
 
            
            <tr>
-            <td>Materi yang dibaca : </td>
-            <td>{userDetail.materi_dibaca}</td>
+            <td>BP Baca Materi : </td>
+            <td>{detail.user.bp_bm}</td>
            </tr>
 
            <tr>
-            <td>Soal yang dikerjakan : </td>
-            <td>{userDetail.soal_dikerjakan} </td>
+            <td>BP Soal Dikerjakan : </td>
+            <td>{detail.user.bp_ks} </td>
            </tr>
 
            <tr>
             <td>Level :</td>
             <td> 
-           {userDetail.exp_level>=1000 ? <h4>1</h4> : <h4></h4>}
-           {userDetail.exp_level>=2000 ? <h4>2</h4> : <h4></h4>}
-           {userDetail.exp_level>=3000 ? <h4>3</h4> : <h4></h4>}
+           {detail.user.exp_point>=250 ? <h4>2</h4> : <h4>1</h4>}
+           {detail.user.exp_point>500 ? <h4>3</h4> : <h4></h4>}
+           {detail.user.exp_point>=1000 ? <h4>4</h4> : <h4></h4>}
+           {detail.user.exp_point>=2000 ? <h4>5</h4> : <h4></h4>}
+           {detail.user.exp_point>=4000 ? <h4>6</h4> : <h4></h4>}
            </td>
            </tr>
  
            <tr>
             <td>Status :</td>
             <td> 
-            {userDetail.status==1 ? <td><span className="text-md inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-green-500 text-white rounded">Active</span></td> :<td><span className="text-md inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-red-500 text-white rounded">Inactive</span></td>}
+            {detail.user.status==1 ? <td><span className="text-md inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-green-500 text-white rounded">Active</span></td> :<td><span className="text-md inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-red-500 text-white rounded">Inactive</span></td>}
            </td>
            </tr>
 
            <tr>
             <td>Created At :</td>
-            <td>{moment(userDetail.created_at,'YYYY-MM-DDTHH:mm:ssZ').format()} </td>
+            <td>{moment(detail.user.created_at,'YYYY-MM-DDTHH:mm:ssZ').format()} </td>
            </tr>
 
            <tr>
             <td>Updated At :</td>
-            <td>{moment(userDetail.updated_at,'YYYY-MM-DDTHH:mm:ssZ').format()} </td>
+            <td>{moment(detail.user.updated_at,'YYYY-MM-DDTHH:mm:ssZ').format()} </td>
            </tr>
        
           </Typography>
@@ -298,7 +270,7 @@ export default function User() {
 
 {/* Update */}
       <Dialog
-        open={openUser2}
+        open={open.openUser2}
         onClose={handleCloseUserUpdate}
         aria-labelledby="modal-modal-title"
       >
@@ -313,7 +285,7 @@ export default function User() {
      <Typography  id="modal-modal-content" variant="h6" component="h2" style={{paddingBottom:"20px"}}> 
         <tr>
             <tr>ID : </tr>
-           <td>{userDetail.id}</td>
+           <td>{detail.user.id}</td>
         </tr>
 
         <tr>
@@ -322,72 +294,20 @@ export default function User() {
         style={{width:"250px",margin:"5px"}}
         type="text"
         name="name"
-        placeholder={userDetail.name}
+        placeholder={detail.user.username}
         onChange={handleChange}
         value={state.name}
         /></td>
           </tr>  
 
-        <tr>
-            <td>BP Kerjakan Soal :</td>
-            <td>  <Input
-        style={{width:"200px",margin:"5px"}}
-        type="text"
-        placeholder={userDetail.badge_point_ks}
-        name="badge_point_ks"
-        onChange={handleChange}
-        value={state.badge_point_ks}
-        variant="outlined"
-        /></td>
-          </tr>
-
           <tr>
-            <td>BP Berbagi Catatan :</td>
-            <td> <Input
-          style={{width:"200px",margin:"5px"}}
-        type="text"
-        variant="outlined"
-        name="badge_point_bc"
-        placeholder={userDetail.badge_point_bc}
-        onChange={handleChange}
-        value={state.badge_point_bc}
-        /></td>
-          </tr>
-
-          <tr>
-            <td>BP Membuat Rumus :</td>
-            <td> <Input
-        style={{width:"200px",margin:"5px"}}
-        type="text"
-        placeholder={userDetail.badge_point_mr}
-        name="badge_point_mr"
-        value={state.badge_point_mr}
-        onChange={handleChange}
-        variant="outlined"
-        /></td>
-          </tr>
-
-          <tr>
-            <td>BP Berbagi Materi :</td>
-            <td> <Input 
-          style={{width:"200px",margin:"5px"}}
-        type="text"
-        variant="outlined"
-        name="badge_point_bm"
-        placeholder={userDetail.badge_point_bm}
-        onChange={handleChange}
-        value={state.badge_point_bm}
-        /></td>
-          </tr>
-
-          <tr>
-            <td>BP Jawab Pertanyaan :</td>
+            <td>User Point :</td>
             <td><Input
           style={{width:"200px",margin:"5px"}}
         type="text"
-        placeholder={userDetail.badge_point_jp}
-        name="badge_point_jp"
-        value={state.badge_point_jp}
+        placeholder={detail.user.user_point}
+        name="user_point"
+        value={state.user_point}
         onChange={handleChange}
         variant="outlined"
         /></td>
@@ -399,7 +319,7 @@ export default function User() {
             <Input
           style={{width:"200px",margin:"5px"}}
         type="text"
-        placeholder={userDetail.catatan_dibagikan}
+        placeholder={detail.user.catatan_dibagikan}
         name="catatan_dibagikan"
         value={state.catatan_dibagikan}
         onChange={handleChange}
@@ -414,7 +334,7 @@ export default function User() {
             <Input
           style={{width:"200px",margin:"5px"}}
         type="text"
-        placeholder={userDetail.pertanyaan_dijawab}
+        placeholder={detail.user.pertanyaan_dijawab}
         name="pertanyaan_dijawab"
         value={state.pertanyaan_dijawab}
         onChange={handleChange}
@@ -429,7 +349,7 @@ export default function User() {
             <Input
           style={{width:"200px",margin:"5px"}}
         type="text"
-        placeholder={userDetail.buat_rumus}
+        placeholder={detail.user.buat_rumus}
         name="rumus_dibuat"
         value={state.rumus_dibuat}
         onChange={handleChange}
@@ -445,7 +365,7 @@ export default function User() {
             <Input
           style={{width:"200px",margin:"5px"}}
         type="text"
-        placeholder={userDetail.materi_dibaca}
+        placeholder={detail.user.materi_dibaca}
         name="materi_dibaca"
         value={state.materi_dibaca}
         onChange={handleChange}
@@ -459,7 +379,7 @@ export default function User() {
             <td> <Input
           style={{width:"200px",margin:"5px"}}
         type="text"
-        placeholder={userDetail.soal_dikerjakan}
+        placeholder={detail.user.soal_dikerjakan}
         name="soal_dikerjakan"
         value={state.soal_dikerjakan}
         onChange={handleChange}
@@ -512,9 +432,9 @@ export default function User() {
          </DialogContent>
       </Dialog>
 
-
+{/* Delete */}
       <Dialog
-        open={openUser3}
+        open={open.openUser3}
         onClose={handleCloseUserDelete}>
         <DialogTitle id="alert-dialog-title">
           {"Confirm to delete user ?"}
