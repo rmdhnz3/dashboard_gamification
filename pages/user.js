@@ -1,12 +1,8 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import {useAppContext} from "../lib/context/State"
-import Moment from "react-moment"
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import { FormControl,InputLabel,Input,FormHelperText,TextField ,Grid, Dialog,DialogActions,DialogContent,DialogTitle,DialogContentText, RadioGroup, FormControlLabel, FormLabel, Radio, Select, MenuItem} from "@mui/material";
+import { Input,Dialog,DialogActions,DialogContent,DialogTitle,DialogContentText, Select, MenuItem} from "@mui/material";
 import moment from "moment";
 
 export default function User() {
@@ -29,10 +25,10 @@ export default function User() {
         bp_br:'',
         bp_bm:'',
         bp_ks:'',
-        exp_point:"",
+        exp_point:100,
         status:1
       })
-      const userUpdate = [state.username,state.bp_bc,state.bp_jp,state.bp_br,state.bp_bm,state.bp_ks,state.exp_point,state.status]
+      const userUpdate = [state.username,state.user_point,state.bp_bc,state.bp_jp,state.bp_br,state.bp_bm,state.bp_ks,state.exp_point,state.status]
       const handleSearch = (e) =>{
         setSearch(e.target.value.toLowerCase())        
       }
@@ -238,7 +234,7 @@ export default function User() {
             <td>Level :</td>
             <td> 
            {detail.user.exp_point>=250 ? <h4>2</h4> : <h4>1</h4>}
-           {detail.user.exp_point>500 ? <h4>3</h4> : <h4></h4>}
+           {detail.user.exp_point>500 ? <h4>3</h4> : <h4>3</h4>}
            {detail.user.exp_point>=1000 ? <h4>4</h4> : <h4></h4>}
            {detail.user.exp_point>=2000 ? <h4>5</h4> : <h4></h4>}
            {detail.user.exp_point>=4000 ? <h4>6</h4> : <h4></h4>}
@@ -289,14 +285,14 @@ export default function User() {
         </tr>
 
         <tr>
-            <td>Nama :</td>
+            <td>Username :</td>
             <td> <Input 
         style={{width:"250px",margin:"5px"}}
         type="text"
-        name="name"
+        name="username"
         placeholder={detail.user.username}
         onChange={handleChange}
-        value={state.name}
+        value={state.username}
         /></td>
           </tr>  
 
@@ -314,14 +310,14 @@ export default function User() {
           </tr>
 
           <tr>
-            <td>Catatan yang Dibagikan :</td>
+            <td>BP Berbagi Catatan :</td>
             <td>
             <Input
           style={{width:"200px",margin:"5px"}}
         type="text"
-        placeholder={detail.user.catatan_dibagikan}
-        name="catatan_dibagikan"
-        value={state.catatan_dibagikan}
+        placeholder={detail.user.bp_bc}
+        name="bp_bc"
+        value={state.bp_bc}
         onChange={handleChange}
         variant="outlined"
         />
@@ -329,14 +325,14 @@ export default function User() {
            </tr>
 
            <tr>
-            <td>Pertanyaan yang dijawab :</td>
+            <td>BP Jawab Pertanyaan :</td>
             <td>
             <Input
           style={{width:"200px",margin:"5px"}}
         type="text"
-        placeholder={detail.user.pertanyaan_dijawab}
-        name="pertanyaan_dijawab"
-        value={state.pertanyaan_dijawab}
+        placeholder={detail.user.bp_jp}
+        name="bp_jp"
+        value={state.bp_jp}
         onChange={handleChange}
         variant="outlined"
         />
@@ -344,14 +340,14 @@ export default function User() {
            </tr>
 
            <tr>
-            <td> Rumus yang dibuat :</td>
+            <td>BP Buat Rumus :</td>
             <td> 
             <Input
           style={{width:"200px",margin:"5px"}}
         type="text"
-        placeholder={detail.user.buat_rumus}
-        name="rumus_dibuat"
-        value={state.rumus_dibuat}
+        placeholder={detail.user.bp_br}
+        name="bp_br"
+        value={state.bp_br}
         onChange={handleChange}
         variant="outlined"
         />
@@ -360,14 +356,14 @@ export default function User() {
 
            
            <tr>
-            <td>Materi yang dibaca : </td>
+            <td>BP Baca Materi : </td>
             <td>
             <Input
           style={{width:"200px",margin:"5px"}}
         type="text"
-        placeholder={detail.user.materi_dibaca}
-        name="materi_dibaca"
-        value={state.materi_dibaca}
+        placeholder={detail.user.bp_bm}
+        name="bp_bm"
+        value={state.bp_bm}
         onChange={handleChange}
         variant="outlined"
         />
@@ -375,13 +371,13 @@ export default function User() {
            </tr>
 
            <tr>
-            <td>Soal yang dikerjakan : </td>
+            <td>BP Kerjakan Soal : </td>
             <td> <Input
           style={{width:"200px",margin:"5px"}}
         type="text"
-        placeholder={detail.user.soal_dikerjakan}
-        name="soal_dikerjakan"
-        value={state.soal_dikerjakan}
+        placeholder={detail.user.bp_ks}
+        name="bp_ks"
+        value={state.bp_ks}
         onChange={handleChange}
         variant="outlined"
         />
@@ -394,13 +390,17 @@ export default function User() {
        <Select
         labelId="level-select"
         id="level-select"
-        value={state.exp_level}
+        value={state.exp_point}
         onChange={handleChange}
-        name="exp_level"
+        name="exp_point"
+        label="Select Level"
        >
-        <MenuItem value={500} name="exp_level">500</MenuItem>
-        <MenuItem value={1000} name="exp_level">1000</MenuItem>
-        <MenuItem value={1500} name="exp_level">1500</MenuItem>
+        <MenuItem value={100} name="exp_point" defaultChecked>1</MenuItem>
+        <MenuItem value={250} name="exp_point">2</MenuItem>
+        <MenuItem value={500} name="exp_point">3</MenuItem>
+        <MenuItem value={1000} name="exp_point">4</MenuItem>
+        <MenuItem value={2000} name="exp_point">5</MenuItem>
+        <MenuItem value={4000} name="exp_point">6</MenuItem>
        </Select>
            </td>
            </tr>

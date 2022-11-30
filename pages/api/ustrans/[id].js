@@ -34,7 +34,7 @@ export default function handler(req, res) {
         
         case 'DELETE':
             const queryx ='SELECT * FROM user_transaction WHERE id = ?'
-            const queryy= 'UPDATE user_transaction SET status=0 WHERE id = ?'
+            const queryy= 'DELETE FROM user_transaction  WHERE id = ?'
             conn.query(queryx,req.query.id,(err,rows)=>{
                 if(err){
                     return res.status(500).json({

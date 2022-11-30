@@ -24,7 +24,7 @@ export default function handler(req, res) {
                             error:err
                         });
                     }
-                    res.status(200).json({succes:true,message:'succesfully updated the data'})
+                  return  res.status(200).json({succes:true,message:'succesfully updated the data'})
                 })
             }else{
                 return res.status(404).json({message:'data not found',succes:false})
@@ -51,16 +51,28 @@ export default function handler(req, res) {
                                 error:err
                             });
                         }
-                        res.status(200).json({succes:true,message:'succesfully deleted the data'})
+                       return res.status(200).json({succes:true,message:'succesfully deleted the data'})
                     })
                 }else{
                     return res.status(404).json({message:'data not found',succes:false})
                 }
             })
+            
+        case 'GET' :
+            const querySql = 'SELECT * FROM badges WHERE id=?'
+            conn.query(querySql,req.query.id,(err,rows,field)=>{
+             if(err){
+                 return res.status(500).json({
+                     message:'Error',error:err
+                 });
+             }
+            return res.status(200).json({succes:true,data:rows,})
+            }) 
 
+            break;
+
+    default:   
    
-
-    default:    
         break;
    }
    
