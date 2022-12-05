@@ -2,10 +2,10 @@ const conn = require('../../../config/db')
 export default function handler(req, res) {
     const querySql = 'SELECT * FROM user'
     const {s,x} = req.query
-    const keys = ["id","name"] ;
+    const keys = ["id", "username"];
     const search = (a)=>{
         return a.filter((item)=>
-        keys.some((key)=>item[key].toString().toLowerCase().includes(s))
+            keys.some((key) => item[key]?.toString().toLowerCase().includes(s))
     )
     }
     conn.query(querySql,(err,rows,field)=>{
