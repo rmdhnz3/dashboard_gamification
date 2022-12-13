@@ -55,25 +55,25 @@ export default function User() {
 
 
   const handleOpenUserDetail = () => setOpen({
-    openUser1: true
+    User1: true
   });
 
   const handleCloseUserDetail = () => setOpen({
-    openUser1: false
+    User1: false
   });
 
   const handleOpenUserUpdate = () => setOpen({
-    openUser2: true
+    User2: true
   });
   const handleCloseUserUpdate = () => setOpen({
-    openUser2: false
+    User2: false
   });
 
   const handleOpenUserDelete = () => setOpen({
-    openUser3: true
+    User3: true
   });
   const handleCloseUserDelete = () => setOpen({
-    openUser3: false
+    User3: false
   });
   if (user.error) return <div>failed to load</div>
   if (!user.dataUser) return <div>Loading</div>
@@ -173,7 +173,7 @@ export default function User() {
 
         {/* Detail  */}
         <Dialog
-          open={open.openUser1}
+          open={open.User1}
           onClose={handleCloseUserDetail}
           scroll={scroll}
           aria-labelledby="scroll-dialog-title"
@@ -268,7 +268,7 @@ export default function User() {
 
         {/* Update */}
         <Dialog
-          open={open.openUser2}
+          open={open.User2}
           onClose={handleCloseUserUpdate}
           aria-labelledby="modal-modal-title"
         >
@@ -436,7 +436,7 @@ export default function User() {
 
         {/* Delete */}
         <Dialog
-          open={open.openUser3}
+          open={open.User3}
           onClose={handleCloseUserDelete}>
           <DialogTitle id="alert-dialog-title">
             {"Confirm to delete user ?"}

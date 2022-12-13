@@ -27,6 +27,9 @@ function MobileNav({open, setOpen}) {
                  <a className="text-xl font-normal my-2 mx-1 hover:bg-gray-300 px-2 py-2 rounded-lg transition duration-500" href="/Badges" onClick={() => setTimeout(() => {setOpen(!open)}, 100)}> 
                     Badges
                 </a>
+                <a className="text-xl font-normal my-2 mx-1 hover:bg-gray-300 px-2 py-2 rounded-lg transition duration-500" href="/Badges" onClick={() => setTimeout(() => { setOpen(!open) }, 100)}>
+                    User Badges
+                </a>
             </div>  
         </div>
     )
@@ -65,6 +68,9 @@ export default function Navbar() {
                     </NavLink>
                     <NavLink to="/badges">
                         Badges
+                    </NavLink>
+                    <NavLink to="/user_badges">
+                        User Badges
                     </NavLink>
                 </div>
             </div>

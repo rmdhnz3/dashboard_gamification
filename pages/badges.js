@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useAppContext } from "../lib/context/State"
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
-import { Input, Dialog, DialogContent, DialogTitle, DialogContentText, CardMedia, Card, DialogActions } from "@mui/material";
+import { Input, Dialog, DialogContent, DialogTitle, DialogContentText, CardMedia, Card, DialogActions, Select, MenuItem } from "@mui/material";
 import moment from "moment";
 
 const style = {
@@ -21,14 +21,13 @@ export default function User() {
 
   const {
     badges,
-    setBadges,
     badgesdetail,
     open,
     setOpen,
     detail,
     addBadges,
     deleteBadges,
-    updateUstrans,
+    updateBadges,
     addBadgesImage,
     setSearch
   } = useAppContext()
@@ -40,10 +39,13 @@ export default function User() {
     badge_name: "",
     badge_image: "",
     badge_point: 0,
+    badge_status: 1,
+    badge_desc: "",
   })
   const badgesItem = [state.badge_name, state.badge_image, state.badge_point]
   const badgeImage = [state.badge_files]
-  console.log(badgesItem)
+  const badgesUpdate = [state.badge_image, state.badge_name, state.badge_point, state.badge_desc, state.badge_status]
+
   const handleSearch2 = (event) => {
     setSearch({
       badgesSearch: event.target.value.toLowerCase()
@@ -78,43 +80,43 @@ export default function User() {
 
   const handleOpenBadgesAdd = () => {
     setOpen({
-      openBadges1: true
+      Badges1: true
     })
   }
   const handleCloseBadgesAdd = () => {
     setOpen({
-      openBadges1: false
+      Badges1: false
     })
   }
 
   const handleOpenBadgesDetail = () => {
     setOpen({
-      openBadges2: true
+      Badges2: true
     })
   }
   const handleCloseBadgesDetail = () => {
     setOpen({
-      openBadges2: false
+      Badges2: false
     })
   }
   const handleOpenBadgesUpdate = () => {
     setOpen({
-      openBadges3: true
+      Badges3: true
     })
   }
   const handleCloseBadgesUpdate = () => {
     setOpen({
-      openBadges3: false
+      Badges3: false
     })
   }
   const handleOpenBadgesDelete = () => {
     setOpen({
-      openBadges4: true
+      Badges4: true
     })
   }
   const handleCloseBadgesDelete = () => {
     setOpen({
-      openBadges4: false
+      Badges4: false
     })
   }
 
@@ -125,7 +127,7 @@ export default function User() {
       <div className='bg-white rounded-lg w-full h-full px-8 py-8 text-center'>
 
         <div className='container mx-auto px-10 mt-4 mb-8 py-4'>
-          <title>User Badges Table</title>
+          <title>Badges Table</title>
           {/* Breadcrumb */}
           <nav className="flex" aria-label="Breadcrumb">
             <ol className="inline-flex items-center space-x-1 md:space-x-3">
@@ -144,7 +146,7 @@ export default function User() {
             </ol>
           </nav>
           {/* Table Header and Filter */}
-          <h1 className="text-4xl text-center font-semibold underline pb-4">User Badges Table</h1>
+          <h1 className="text-4xl text-center font-semibold underline pb-4">Badges Table</h1>
           <div className='bg-white rounded-lg w-full px-8 py-8 text-center'>
             <div>
               <div className="pb-4 bg-white dark:bg-gray-900">
@@ -171,7 +173,7 @@ export default function User() {
                     <th scope="col" className="py-3 px-3">
                       Image
                     </th>
-                    <th>Status :</th>
+                    <th>Status </th>
                     <th scope="col" className="py-3 px-3">
                       Action
                     </th>
@@ -226,7 +228,7 @@ export default function User() {
 
         {/*Post  */}
         <Dialog
-          open={open.openBadges1}
+          open={open.Badges1}
           onClose={handleCloseBadgesDetail}
           scroll={scroll}
           aria-labelledby="scroll-dialog-title"
@@ -273,7 +275,7 @@ export default function User() {
 
         {/*Detail  */}
         <Dialog
-          open={open.openBadges2}
+          open={open.Badges2}
           onClose={handleCloseBadgesDetail}
           scroll={scroll}
           aria-labelledby="scroll-dialog-title"
@@ -342,9 +344,105 @@ export default function User() {
           </DialogContent>
         </Dialog>
 
+        {/* Update */}
+        <Dialog
+          open={open.Badges3}
+          onClose={handleCloseBadgesUpdate}
+          aria-labelledby="modal-modal-title"
+        >
+          <DialogTitle>
+            <Typography id="modal-modal-title" variant="h4" component="h2" >
+              Update badge data
+            </Typography>
+          </DialogTitle>
+
+          <DialogContent>
+            <form >
+              <Typography id="modal-modal-content" variant="h6" component="h2" style={{ paddingBottom: "20px" }}>
+
+                <tr>
+                  <td>Image :</td>
+                  <td>  <input accept=".webp,.img,.png,.jpg" type="file" name="badge_image" onChange={handleImage} style={{ marginTop: 15, marginLeft: 15, marginBottom: 10 }} /></td>
+                </tr>
+
+                <tr>
+                  <td>Name :</td>
+                  <td><Input
+                    style={{ width: "200px", margin: "5px" }}
+                    type="text"
+                    placeholder={detail.badges.name}
+                    name="badge_name"
+                    value={state.badge_name}
+                    onChange={handleChange}
+                    variant="outlined"
+                  /></td>
+                </tr>
+
+                <tr>
+                  <td>BP :</td>
+                  <td>
+                    <Input
+                      style={{ width: "200px", margin: "5px" }}
+                      type="text"
+                      placeholder={detail.badges.bp}
+                      name="badge_point"
+                      value={state.badge_point}
+                      onChange={handleChange}
+                      variant="outlined"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Desc :</td>
+                  <td>
+                    <Input
+                      style={{ width: "200px", margin: "5px" }}
+                      type="text"
+                      placeholder={detail.badges.desc}
+                      name="badge_desc"
+                      value={state.badge_desc}
+                      onChange={handleChange}
+                      variant="outlined"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Status :</td>
+                  <td>
+                    <Select
+                      labelId="status-select"
+                      id="status-select"
+                      value={state.badge_status}
+                      onChange={handleChange}
+                      name="badge_status"
+                      style={{ marginTop: 20 }}
+                    >
+                      <MenuItem value={1} name="badge_status"><td><span className="text-md inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-green-500 text-white rounded">Available</span></td></MenuItem>
+                      <MenuItem value={0} name="badge_status"><td><span className="text-md inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline font-bold bg-red-500 text-white rounded">Unavailable</span></td></MenuItem>
+                    </Select>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td >
+                    <button type="button" style={{ marginTop: 20, width: 125, height: 35, fontSize: 20 }} className="inline-block px-4 py-2 bg-yellow-400 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700 active:shadow-lg transition duration-150 ease-in-out" onClick={() => { updateBadges(id, [badgesUpdate]), addBadgesImage(badgeImage) }}>Update</button>
+                  </td>
+                </tr>
+              </Typography>
+
+            </form>
+          </DialogContent>
+        </Dialog>
+
+
+
+
+
         {/* Delete */}
         <Dialog
-          open={open.openBadges4}
+          open={open.Badges4}
           onClose={handleCloseBadgesDelete}>
           <DialogTitle id="alert-dialog-title">
             {"Confirm to delete badges  ?"}
