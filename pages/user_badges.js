@@ -353,10 +353,10 @@ export default function User() {
                                             style={{ marginTop: 20 }}
                                         >
                                             <MenuItem value={1} name="is_claimed"><td><span style={{ color: "green" }}>
-                                                Available
+                                                Claimed
                                             </span></td></MenuItem>
                                             <MenuItem value={0} name="is_claimed"><td><span style={{ color: "red" }}>
-                                                Unavailable
+                                                Unclaimed
                                             </span></td></MenuItem>
 
                                         </Select>
