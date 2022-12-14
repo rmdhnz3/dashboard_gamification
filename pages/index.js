@@ -67,10 +67,10 @@ export default function Index() {
                 <Card variant="outlined" style={{ marginLeft: 20, marginTop: 20, marginBottom: 20 }} sx={{ maxWidth: 750, display: 'flex' }}>
                   <CardContent><Typography style={{ marginTop: 25, fontSize: 25 }} variant="h4">Badge Total : {badges.data.data?.length}</Typography>
                     <Card variant="outlined" sx={{ maxWidth: 400, display: 'row', backgroundColor: 'whitesmoke' }}>
-                      <Typography>{"id"}{"-->"}{"badge_name"}{"-->"}{"image"}</Typography>
+                      <Typography>{"id"}{"-->"}{"badge_name"}</Typography>
                       {badges.data.data?.map(item => {
                         return (
-                          <Typography>{item.id}{"-->"}{item.name}{"-->"}
+                          <Typography>{item.id}{"-->"}{item.name}
                             <Card sx={{ maxWidth: 35 }}><CardMedia
                               component="img"
                               height="20"
