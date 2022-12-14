@@ -164,7 +164,7 @@ export default function User() {
                 >
                     <DialogTitle>
                         <Typography id="modal-modal-title" variant="h4" component="h4" >
-                            Detail For User ID <strong>{detail.user_badges.user_id}</strong>
+                            Detail For  ID <strong>{detail.user_badges.id}</strong>
                         </Typography>
                     </DialogTitle>
                     <DialogContent style={{ width: 560 }} dividers={scroll === 'paper'}>
