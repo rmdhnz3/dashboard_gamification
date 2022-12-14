@@ -445,7 +445,7 @@ export default function User() {
           open={open.Badges4}
           onClose={handleCloseBadgesDelete}>
           <DialogTitle id="alert-dialog-title">
-            {"Confirm to delete badges  ?"}
+            {"Confirm to delete badge ?"}
           </DialogTitle>
           <DialogActions>
             <button type="button" className="inline-block px-4 py-2 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out" onClick={() => deleteBadges(id)}>yes</button>
